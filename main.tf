@@ -19,7 +19,7 @@ variable "bastion_user" {}
 variable "bastion_private_key" {}
 
 resource "template_file" "acl" {
-  template = "${file(concat(path.module), "/acl.json.tpl")}"
+  template = "${file(concat(path.module, "/acl.json.tpl"))}"
 
   vars = {
     id    = "${var.id}"
