@@ -41,7 +41,7 @@ resource "null_resource" "acl" {
 
   provisioner "remote-exec" {
     inline = [
-    "curl -X PUT -d '${template_file.acl.rendered}' http://localhost:8500/v1/acl/create?token=${var.token}"
+    "curl -X PUT -d \"${template_file.acl.rendered}\" http://localhost:8500/v1/acl/create?token=${var.token}"
     ]
   }
 }
