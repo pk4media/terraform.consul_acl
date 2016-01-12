@@ -25,7 +25,7 @@ resource "template_file" "acl" {
     id    = "${var.id}"
     name  = "${var.name}"
     type  = "${var.type}"
-    rules = "${var.rules}"
+    rules = "${replace(replace(var.rules, "\n", ""), "\\"", "\\\\"")}"
   }
 }
 
@@ -41,7 +41,11 @@ resource "null_resource" "acl" {
 
   provisioner "remote-exec" {
     inline = [
-    "curl -X PUT -d \"${template_file.acl.rendered}\" http://localhost:8500/v1/acl/create?token=${var.token}"
+    <<EOT
+curl -X PUT http://localhost:8500/v1/acl/create?token=${var.token} --data-binary @- <<BODY
+${template_file.acl.rendered}
+BODY
+EOT
     ]
   }
 }
