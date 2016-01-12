@@ -42,7 +42,7 @@ resource "null_resource" "acl" {
   provisioner "remote-exec" {
     inline = [
     <<EOT
-curl -X PUT http://localhost:8500/v1/acl/create?token=${var.token} --data-binary @- <<BODY
+curl -X PUT http://127.0.0.1:8500/v1/acl/create?token=${var.token} --data-binary @- <<BODY
 ${template_file.acl.rendered}
 BODY
 EOT
